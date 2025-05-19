@@ -273,13 +273,14 @@
 @media (max-width: 900px) {
   .chat-box {
     width: 100%;
-    height: 90vh;
+    height: 100%;
     border-radius: 0;
   }
 
   .chat-user .arrow {
     display: block;
     height: 3vh;
+    width:4vw;
   }
 
   .chat-user .help {
@@ -298,27 +299,23 @@
   }
 
   .chat-user img {
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
   }
 
   .chat-user p {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 500;
     letter-spacing: 0.4px;
   }
 
   .chat-input {
     height: 7vh;
-    padding: 8px 20px;
+    padding: 0px ;
   }
 
   .chat-input img {
     width: 30px;
-  }
-
-  .sider img {
-    height: 5vh;
   }
 
   .sider p {
