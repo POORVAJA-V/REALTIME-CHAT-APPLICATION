@@ -68,5 +68,6 @@ font-weight:300;
 @media (max-width:900px){
     .rs{
         display:none;
+        height:100vh;
     }
 }

@@ -4,9 +4,9 @@
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
   height: 85vh;
-  overflow: hidden;
+  overflow: hidden;;
+  
 }
-
 .ls-top {
   padding: 20px;
 }
@@ -165,9 +165,11 @@
 
 @media (max-width: 900px) {
   .ls {
-    width:100%;
+    width:97%;
     font-size: 30px;
     margin:0px;
+    height:100vh;
+    
   }
 
   .friends {

@@ -2,11 +2,11 @@
     min-height:100vh;
     background : linear-gradient(#596AFF,#383699);
     display:grid;
-    place-items:center;
+    margin:0px;
+     place-items:center;
 }
 .chat-container{
-    width:95%;
-    max-width:1000px;
+    
     height:85vh;
     background: aliceblue;
     display:grid;

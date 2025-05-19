@@ -149,7 +149,9 @@
 .chat-input input:focus::placeholder {
     color: #b3b9c9;
 }
-
+.msg-img{
+    height:15vw;
+}
 .chat-msg {
   height: calc(100% - 90px);
   padding: 20px 15px 70px;
@@ -275,7 +277,7 @@
 @media( max-width: 900px) {
     .chat-box {
         width: 100%;
-        height:100%;
+        height:90vh;
         border-radius: 0;
     }
 
@@ -317,14 +319,14 @@
         width: 100%;
     }
     .chat-input input{
-        margin:5px;
+        margin:0px;
     }
 
     .chat-input .send-btn {
         display: inline-block !important;
-        width: 25px;
-        height: 25px;
-        margin-left:5px;
+        width: 22px;
+        height: 22px;
+        margin-left:10px;
         margin-right:5px;
     }
 
