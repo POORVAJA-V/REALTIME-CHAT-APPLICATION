@@ -3,7 +3,7 @@
   backdrop-filter: blur(10px);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
-  height: 85vh;
+  height: 100vh;
   overflow: hidden;;
   
 }
@@ -167,7 +167,6 @@
   .ls {
     width:97%;
     font-size: 30px;
-    margin:0px;
     height:100vh;
     
   }

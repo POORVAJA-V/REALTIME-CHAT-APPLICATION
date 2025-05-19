@@ -147,7 +147,7 @@ updateChatUserData();
           <div className="menu">
             <img src={assets.menu_icon} alt="" />
             <div className="sub-menu">
-              <p onClick={() => navigate("/profile")}>Edi Profile</p>
+              <p onClick={() => navigate("/profile")}>Edit Profile</p>
               <hr />
               <p onClick={(logout)}>Logout</p>
             </div>

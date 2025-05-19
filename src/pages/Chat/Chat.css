@@ -3,11 +3,11 @@
     background : linear-gradient(#596AFF,#383699);
     display:grid;
     margin:0px;
-     place-items:center;
+     
 }
 .chat-container{
     
-    height:85vh;
+    height:100vh;
     background: aliceblue;
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -16,10 +16,14 @@
     font-size:50px;
     color:white;
     font-weight:600;
+    display:flex;
+    align-items: center;
+    justify-content:center;
 }
 @media (max-width:900px){
     .chat-container{
         display:flex;
+        height:100vh;
     }
     .loading{
         font-size:35px;
