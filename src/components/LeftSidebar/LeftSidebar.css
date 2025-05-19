@@ -1,5 +1,5 @@
 .ls {
-  background: rgba(0, 0, 0, 0.945);
+  background: rgb(5, 1, 27);
   backdrop-filter: blur(10px);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
@@ -168,6 +168,7 @@
     width:95%;
     font-size: 30px;
     height:100vh;
+    overflow:hidden;
     
   }
 

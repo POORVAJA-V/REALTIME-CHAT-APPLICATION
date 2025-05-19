@@ -1,7 +1,7 @@
 .chat-box {
   height: 100vh;
   position: relative;
-  background-color: #e8f0fe;
+  background-color: #bbd1f764;
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
@@ -319,7 +319,8 @@
     .chat-input {
         height: 10vh;
         padding: 5px ;
-     
+        margin-bottom:15px;
+     position:fixed;
     }
     .chat-input input{
         margin:10px;
