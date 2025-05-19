@@ -165,7 +165,7 @@
 
 @media (max-width: 900px) {
   .ls {
-    width:97%;
+    width:95%;
     font-size: 30px;
     height:100vh;
     
@@ -176,6 +176,7 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 500;
     padding: 10px;
+    width:90%;
   }
 
   .friends span {
