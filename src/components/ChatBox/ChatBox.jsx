@@ -159,7 +159,7 @@ useEffect(()=>{
          </div>
        
         <div className="chat-input">
-            <input onChange={(e)=>setInput(e.target.value)} value={input} type="text" placeholder='send your message here..'/>
+            <input onChange={(e)=>setInput(e.target.value)} value={input} type="text" placeholder='send your message here'/>
             <input onChange={sendImage} type="file" id="image" accept="image/png , image/jpeg, image/jpg" hidden/>
             <label htmlFor="image">
                 <img src={assets.gallery_icon} alt=""/>
