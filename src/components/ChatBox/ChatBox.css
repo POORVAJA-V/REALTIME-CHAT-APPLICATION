@@ -360,7 +360,9 @@
         
     }
     .chat-msg{
-         padding: 10vh 15px 12vh;
+         height: calc(100vh - 10vh); /* Adjust according to actual height of header (50px) and footer (90px) */
+  padding: 90px 15px 90px; /* Leave space at top and bottom */
+  overflow-y: auto;
     }
 
     .chat-user .arrow {
@@ -410,7 +412,7 @@
 
     .chat-input {
         height: 10vh;
-        padding: 5px ;
+        padding: 10px ;
         margin-bottom:5px;
      position:fixed;
     }
