@@ -1,10 +1,36 @@
-.chat{
-    min-height:100vh;
-    background : linear-gradient(#596AFF,#383699);
-    display:grid;
-    margin:0px;
-     
+.chat {
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #240046, #11096c, #030537, #16094a);
+  background-size: 400% 400%;
+  animation: nightShift 18s ease infinite;
+  display: grid;
+  margin: 0px;
+  position: relative;
+  overflow: hidden;
 }
+@keyframes nightShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.chat::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: sparkle 60s linear infinite;
+  opacity: 0.15;
+  z-index: 0;
+}
+@keyframes sparkle {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50px, -50px); }
+}
+
 .chat-container{
     
     height:100vh;
@@ -12,20 +38,49 @@
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
-.loading{
-    font-size:50px;
-    color:white;
-    font-weight:600;
-    display:flex;
-    align-items: center;
-    justify-content:center;
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 100vh;
+  z-index: 1;
 }
+
+.loading span {
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 50%;
+  animation: bounce 0.6s infinite ease-in-out;
+}
+
+.loading span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
 @media (max-width:900px){
     .chat-container{
         display:flex;
         height:100vh;
     }
     .loading{
-        font-size:35px;
+        font-size: 28px;
+    width: 15ch;
     }
 }

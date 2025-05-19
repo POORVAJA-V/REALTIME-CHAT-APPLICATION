@@ -171,14 +171,19 @@ updateChatUserData();
         ) : (
           Array.isArray(chatData) &&
           chatData.map((item, index) => (
-            <div onClick={()=>setChat(item)} key={index} className={`friends ${item.messageSeen || item.messageId === messagesId ? " ": "border" }`}>
-              <img src={item.userData.avatar} alt="" />
-              <div>
-                <p>{item.userData.name}</p>
-                <span>{item.lastMessage}</span>
-              </div>
-            </div>
-          ))
+  <div
+    onClick={() => setChat(item)}
+    key={index}
+    className={`friends ${item.messageSeen || item.messageId === messagesId ? "" : "border"}`}
+    style={{ animationDelay: `${index * 0.05}s` }}
+  >
+    <img src={item.userData.avatar} alt="" />
+    <div>
+      <p>{item.userData.name}</p>
+      <span>{item.lastMessage}</span>
+    </div>
+  </div>
+))
         )}
       </div>
     </div>

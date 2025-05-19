@@ -18,16 +18,22 @@ useEffect(()=>{
 
   return (
     <div className="chat">
-    {
-      loading ?<p className="loading">Loading...</p>
-      : 
-    
+   {
+  loading ? (
+    <div className="loading">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  ) : (
     <div className="chat-container">
-        <LeftSidebar/>
-        <ChatBox/>
-        <RightSidebar/>
-        </div>
-    }
+      <LeftSidebar />
+      <ChatBox />
+      <RightSidebar />
+    </div>
+  )
+}
+
     </div>
   )
 }

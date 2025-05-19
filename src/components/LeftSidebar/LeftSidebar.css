@@ -4,8 +4,18 @@
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
   height: 100vh;
-  overflow: hidden;;
-  
+  overflow: hidden;
+  animation: slideInLeft 0.6s ease-out;
+}
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
 }
 .ls-top {
   padding: 20px;
@@ -32,43 +42,84 @@
   cursor: pointer;
 }
 
+.menu {
+    background: none;
+    border-radius: 8px;
+    transition: box-shadow 0.3s, background 0.3s;
+    box-shadow: none;
+    position: relative;
+}
+
+.menu:hover {
+    box-shadow: none;
+    background: none;
+}
+
 .menu .sub-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  width: 130px;
-  background-color: white;
-  padding: 10px;
-  border-radius: 5px;
-  color: black;
-  display: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 140px;
+    background: linear-gradient(135deg, #111632 60%, #2841bf 100%);
+    padding: 12px;
+    border-radius: 10px;
+    color: #fff;
+    display: none;
+    box-shadow: 0 8px 24px rgba(38, 208, 206, 0.25);
+    opacity: 0;
+    transform: translateY(-16px) scale(0.98);
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(.4,2,.3,1);
+    animation: subMenuFadeIn 0.4s;
+}
+
+@keyframes subMenuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .menu .sub-menu::before {
-  content: "";
-  position: absolute;
-  top: -8px;
-  right: 10px;
-  border-width: 0 6px 8px 6px;
-  border-style: solid;
-  border-color: transparent transparent white transparent;
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 18px;
+    border-width: 0 8px 10px 8px;
+    border-style: solid;
+    border-color: transparent transparent #26d0ce transparent;
+    filter: drop-shadow(0 2px 2px rgba(38,208,206,0.15));
 }
 
 .sub-menu hr {
-  border: none;
-  height: 1px;
-  background: #a4a4a4;
-  margin: 8px 0;
+    border: none;
+    height: 1px;
+    background: #2e4a7c;
+    margin: 10px 0;
 }
 
 .sub-menu p {
-  cursor: pointer;
-  font-size: 13px;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 0;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+}
+.sub-menu p:hover {
+    background: rgba(38,208,206,0.18);
+    color: #07fff3;
 }
 
 .menu:hover .sub-menu {
-  display: block;
+    display: block;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    animation: subMenuFadeIn 0.4s;
 }
 
 .ls-search {
@@ -93,6 +144,7 @@
   border: none;
   outline: none;
   color: white;
+   transition: all 0.3s ease;
 }
 
 .ls-search input::placeholder {
@@ -105,6 +157,11 @@
   height: 70%;
   overflow-y: scroll;
   padding-top: 10px;
+}
+.ls-search input:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #0070ff;
+  box-shadow: 0 0 4px #0070ff;
 }
 
 .ls-list::-webkit-scrollbar {
@@ -128,11 +185,33 @@
   font-size: 13px;
   transition: background 0.3s, transform 0.2s;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.5s ease both;
 }
-
+@keyframes fadeInUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
 .friends:hover {
   background: #005eff;
   transform: scale(1.02);
+}
+.friends:active {
+  animation: ripple 0.6s linear;
+}
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 30px rgba(0, 255, 255, 0);
+  }
 }
 
 .friends img {
@@ -157,8 +236,19 @@
 
 .friends.border {
   box-shadow: 0 0 8px #07fff3;
+   animation: pulseGlow 1.5s infinite;
 }
-
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 8px #07fff3;
+  }
+  50% {
+    box-shadow: 0 0 16px #07fff3;
+  }
+  100% {
+    box-shadow: 0 0 8px #07fff3;
+  }
+}
 .friends.border div span {
   color: #07fff3;
 }

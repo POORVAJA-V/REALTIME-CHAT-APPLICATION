@@ -20,7 +20,10 @@ const Login = () => {
   return (
     <div className='login'>
       <img src={assets.logo_big} alt="" className="logo" />
-      <form onSubmit={onSubmitHandler} className="login-form">
+      <form
+  key={currState}
+  onSubmit={onSubmitHandler}
+  className={`login-form ${currState === 'Login' ? 'login-mode' : 'signup-mode'}`}>
         <h2>{currState}</h2>
         {currState=== "Sign up" ? <input onChange={(e)=>setUserName(e.target.value)} value={userName} type="text" className="form_input" placeholder="username" required />:null}
         <input onChange={(e)=>setEmail(e.target.value)} value={email} type="email" className="form_input" placeholder="email address" required />
