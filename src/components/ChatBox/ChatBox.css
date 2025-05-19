@@ -30,6 +30,11 @@
   border-bottom: 1px solid #d0d7e9;
   background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(7, 126, 255, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   
 }
 
@@ -79,6 +84,11 @@
     box-shadow: 0 -2px 8px rgba(7, 126, 255, 0.1);
     border-radius: 0 0 16px 16px;
     animation: chatInputFadeIn 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 @keyframes chatInputFadeIn {
@@ -212,6 +222,7 @@
   flex-direction: column-reverse;
   scrollbar-width: thin;
   scrollbar-color: #a4b0d4 transparent;
+  padding: 90px 15px 90px;
 }
 
 /* Scrollbar styles */
@@ -348,6 +359,9 @@
         padding:0px;
         
     }
+    .chat-msg{
+         padding: 10vh 15px 12vh;
+    }
 
     .chat-user .arrow {
         display: block;
@@ -413,7 +427,9 @@
     }
 
     .sider p {
-        font-size: 12px;
+        font-size: 14px;
+        font-weight:700;
+        color:rgba(0, 0, 0, 0.981);
     }
     .msg-img{
         height:27vh;
