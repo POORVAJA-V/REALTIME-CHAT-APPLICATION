@@ -18,6 +18,7 @@
   border-bottom: 1px solid #d0d7e9;
   background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(7, 126, 255, 0.1);
+  
 }
 
 .chat-user img {
@@ -302,7 +303,9 @@
 
     .chat-user {
         height: 10vh;
-        padding: 15px 20px;
+        padding: 0px 20px;
+        width:100%;
+        
     }
 
     .chat-user img {
@@ -319,7 +322,7 @@
     .chat-input {
         height: 10vh;
         padding: 5px ;
-        margin-bottom:15px;
+        margin-bottom:5px;
      position:fixed;
     }
     .chat-input input{
