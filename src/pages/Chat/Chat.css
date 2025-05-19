@@ -10,7 +10,7 @@
     height:85vh;
     background: aliceblue;
     display:grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 .loading{
     font-size:50px;

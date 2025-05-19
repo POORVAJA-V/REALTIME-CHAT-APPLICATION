@@ -151,7 +151,6 @@ useEffect(()=>{
     <p className="msg">{msg.text}</p>
   }
     <div>
-      <img src={msg.sId == userData.id ? userData.avatar : chatUser.userData.avatar} alt="" />
       <p>{convertTimestamp(msg.createdAt)}</p>
     </div>
   </div>
