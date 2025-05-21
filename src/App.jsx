@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { onAuthStateChanged } from 'firebase/auth'
 import {auth} from './config/firebase'
 import { AppContext } from './context/AppContext'
+// import RightSidebar from "./components/RightSidebar/RightSidebar";
 
 const App = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const App = () => {
       <Route path="/" element={<Login />} />
       <Route path="/chat" element={<Chat />} />
       <Route path="/profile" element={<ProfileUpdate />} />
+      {/* <Route path="/rightSidebar" element={<RightSidebar  />} /> */}
     </Routes>
     </>
   )

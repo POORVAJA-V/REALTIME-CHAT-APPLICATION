@@ -14,6 +14,7 @@ import { db } from "../../config/firebase";
 import { toast } from "react-toastify";
 import upload from "../../lib/upload";
 
+
 const ChatBox = () => {
   const {
     userData,
@@ -158,6 +159,14 @@ const ChatBox = () => {
             <img className="img-dot" src={assets.green_dot} alt="" />
           ) : null}
         </p>
+         {/* <img
+    src={assets.hamburger_icon} // replace with your actual icon file
+    className="hamburger"
+    alt="menu"
+    onClick={() => {
+      window.location.href = "/rightSidebar"; // redirect to RightSidebar page
+    }}
+  /> */}
         <img src={assets.help_icon} className="help" alt="" />
       </div>
 
@@ -185,6 +194,11 @@ const ChatBox = () => {
           value={input}
           type="text"
           placeholder="send your message here"
+          onKeyDown={(e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }}}
         />
         <input
           onChange={sendImage}
