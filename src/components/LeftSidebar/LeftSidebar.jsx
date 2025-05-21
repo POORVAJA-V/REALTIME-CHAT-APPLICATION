@@ -24,32 +24,43 @@ const LeftSidebar = () => {
   const [user, setUser] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
 
-  const inputHandler = async (e) => {
-    try {
-      const input = e.target.value;
-      if (input) {
-        setShowSearch(true);
-        const userRef = collection(db, "users");
-        const q = query(userRef, where("username", "==", input.toLowerCase()));
-        const querySnap = await getDocs(q);
-        if (!querySnap.empty && querySnap.docs[0].data().id !== userData.id) {
-          let userExist = false;
-          chatData.map((user) => {
-            if (user.rId === querySnap.docs[0].data().id) {
-              userExist = true;
-            }
-          });
-          if (!userExist) {
-            setUser(querySnap.docs[0].data());
-          }
-        } else {
-          setUser(null);
-        }
-      } else {
-        setShowSearch(false);
-      }
-    } catch (error) {}
-  };
+const inputHandler = async (e) => {
+  try {
+    const input = e.target.value.toLowerCase();
+    setUser(null); // reset previous result
+
+    if (input) {
+      setShowSearch(true);
+      const userRef = collection(db, "users");
+
+      // Set range for "startsWith"
+      const end = input + "\uf8ff"; // highest unicode char to complete prefix match
+
+      const q = query(userRef,
+        where("username", ">=", input),
+        where("username", "<=", end)
+      );
+
+      const querySnap = await getDocs(q);
+
+     let results = [];
+querySnap.forEach((docSnap) => {
+  const userDoc = docSnap.data();
+  if (userDoc.id !== userData.id && !chatData.some(u => u.rId === userDoc.id)) {
+    results.push(userDoc);
+  }
+});
+setSearchResults(results); // use this to display a list
+
+    } else {
+      setShowSearch(false);
+    }
+  } catch (error) {
+    console.error("Search error:", error.message);
+  }
+};
+
+
 
   const addChat = async () => {
     const messagesRef = collection(db, "messages");
