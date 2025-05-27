@@ -137,25 +137,10 @@ npm run dev
 * Profile data is synced with Firestore and uploaded to Storage.
 
 ---
+##  DEPLOYED WEBSITE 
 
-## 📷 Architecture Diagram
+https://realtime-chat-application-chi.vercel.app
 
-The app’s flow and interactions are illustrated below:
-
-![Architecture Diagram](./diagram%20\(1\).png)
-
----
-
-## 📣 Contribution
-
-Contributions, issues, and feature requests are welcome!
-Feel free to check the [issues page](https://github.com/your-username/your-repo-name/issues).
-
----
-
-## 📝 License
-
-This project is [MIT](https://choosealicense.com/licenses/mit/) licensed.
 
 ---
 
