@@ -137,12 +137,6 @@ npm run dev
 * Profile data is synced with Firestore and uploaded to Storage.
 
 ---
-##  DEPLOYED WEBSITE 
-
-https://realtime-chat-application-chi.vercel.app
-
-
----
 
 ##  DEPLOYMENT LINK 
 
