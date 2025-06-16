@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./ProfileUpdate.css";
 import assets from "../../assets/assets";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db, auth } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -24,6 +24,7 @@ const ProfileUpdate = () => {
   try {
     if (!prevImage && !image) {
       toast.error("Please upload a profile image");
+      return;
     }
 
     const docRef = doc(db, 'users', uid);
@@ -31,24 +32,24 @@ const ProfileUpdate = () => {
     if (image) {
       const imgUrl = await upload(image);
       setPrevImage(imgUrl);
-      await updateDoc(docRef, {
+      await setDoc(docRef, {
         avatar: imgUrl,
         bio: bio,
         name: name,
-      });
+      }, { merge: true });
     } else {
-      await updateDoc(docRef, {
+      await setDoc(docRef, {
         bio: bio,
         name: name,
-      })
+      }, { merge: true });
     }
 
     const snap = await getDoc(docRef);
     setUserData(snap.data());
-    navigate('/chat')
+    navigate('/chat');
   } 
   catch (error) {
-    console.error(error);
+    console.error("Error in profile update:", error);
     toast.error(error.message);
   }
 }

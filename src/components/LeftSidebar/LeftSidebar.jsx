@@ -219,10 +219,7 @@ const addChat = async (selectedUser) => {
           searchResults.map((usr, index) => (
             <div
               key={usr.id || index}
-              onClick={() => {
-                setUser(usr);
-                addChat(user);
-              }}
+              onClick={() => addChat(usr)}
               className="friends add-user"
             >
               <img src={usr.avatar} alt="" />

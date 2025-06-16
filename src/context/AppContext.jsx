@@ -19,7 +19,7 @@ const AppContextProvider = ({ children }) => {
       const userRef = doc(db, "users", uid);
       const userSnap = await getDoc(userRef);
       const userData = userSnap.data();
-      setUserData(userData);
+      setUserData({ ...userData,id:uid});
       if (userData.avatar && userData.name) {
         navigate("/chat");
       } else {
@@ -40,24 +40,26 @@ const AppContextProvider = ({ children }) => {
     }
   };
   useEffect(() => {
-    if (userData) {
-      const chatRef = doc(db, "chats", userData.id);
-      const unSub = onSnapshot(chatRef, async (res) => {
-        const chatItems = res.data().chatsData;
-        const tempData = [];
-        for (const item of chatItems) {
-          const userRef = doc(db, "users", item.rId);
-          const usersnap = await getDoc(userRef);
-          const userData = usersnap.data();
-          tempData.push({ ...item, userData });
-        }
-        setChatData(tempData.sort((a, b) => b.updatedAt - a.updatedAt));
-      });
-      return () => {
-        unSub();
-      };
-    }
-  }, [userData]);
+  if (userData && userData.id) {
+    const chatRef = doc(db, "chats", userData.id);
+    const unSub = onSnapshot(chatRef, async (res) => {
+      const chatItems = res.data()?.chatsData || [];
+      const tempData = [];
+      for (const item of chatItems) {
+        const userRef = doc(db, "users", item.rId);
+        const usersnap = await getDoc(userRef);
+        const userData = usersnap.data();
+        tempData.push({ ...item, userData });
+      }
+      setChatData(tempData.sort((a, b) => b.updatedAt - a.updatedAt));
+    });
+
+    return () => {
+      unSub();
+    };
+  }
+}, [userData]);
+
 
   const value = {
     userData,
