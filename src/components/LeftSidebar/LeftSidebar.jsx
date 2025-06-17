@@ -31,14 +31,14 @@ const LeftSidebar = () => {
     setChatVisible,
   } = useContext(AppContext);
 
-  const [user, setUser] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
-  const [searchResults, setSearchResults] = useState([]); // ✅ added
+  const [searchResults, setSearchResults] = useState([]);
+  const [registeredUsers, setRegisteredUsers] = useState([]); // ✅
 
+  // 🔍 Handle input search
   const inputHandler = async (e) => {
     try {
       const input = e.target.value.toLowerCase();
-      setUser(null);
       setSearchResults([]);
 
       if (input) {
@@ -62,7 +62,7 @@ const LeftSidebar = () => {
             results.push(userDoc);
           }
         });
-        setSearchResults(results); // ✅ fixed error
+        setSearchResults(results);
       } else {
         setShowSearch(false);
       }
@@ -71,85 +71,95 @@ const LeftSidebar = () => {
     }
   };
 
+  // 🧠 Fetch all registered users on mount
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      try {
+        const userRef = collection(db, "users");
+        const querySnap = await getDocs(userRef);
 
-const addChat = async (selectedUser) => {
-  if (!selectedUser) {
-    toast.error("No user selected.");
-    return;
-  }
+        let users = [];
+        querySnap.forEach((docSnap) => {
+          const userDoc = docSnap.data();
+          if (userDoc.id !== userData.id && !chatData.some((c) => c.rId === userDoc.id)) {
+            users.push(userDoc);
+          }
+        });
 
-  try {
-    const messagesRef = collection(db, "messages");
-    const chatsRef = collection(db, "chats");
-
-    const newMessageRef = doc(messagesRef);
-    await setDoc(newMessageRef, {
-      createAt: serverTimestamp(),
-      messages: [],
-    });
-
-    const otherUserChatRef = doc(chatsRef, selectedUser.id);
-    const myChatRef = doc(chatsRef, userData.id);
-
-    // Check if chat docs exist, if not create them
-    const [myDocSnap, otherDocSnap] = await Promise.all([
-      getDoc(myChatRef),
-      getDoc(otherUserChatRef),
-    ]);
-
-    if (!myDocSnap.exists()) {
-      await setDoc(myChatRef, { chatsData: [] });
-    }
-    if (!otherDocSnap.exists()) {
-      await setDoc(otherUserChatRef, { chatsData: [] });
-    }
-
-    // Update both users' chat documents
-    const chatEntryForOther = {
-      messageId: newMessageRef.id,
-      lastMessage: "",
-      rId: userData.id,
-      updatedAt: Date.now(),
-      messageSeen: true,
+        setRegisteredUsers(users);
+      } catch (error) {
+        console.error("Fetch users error:", error.message);
+      }
     };
 
-    const chatEntryForMe = {
-      messageId: newMessageRef.id,
-      lastMessage: "",
-      rId: selectedUser.id,
-      updatedAt: Date.now(),
-      messageSeen: true,
-    };
+    fetchAllUsers();
+  }, [userData, chatData]);
 
-    await updateDoc(otherUserChatRef, {
-      chatsData: arrayUnion(chatEntryForOther),
-    });
+  const addChat = async (selectedUser) => {
+    if (!selectedUser) {
+      toast.error("No user selected.");
+      return;
+    }
 
-    await updateDoc(myChatRef, {
-      chatsData: arrayUnion(chatEntryForMe),
-    });
+    try {
+      const messagesRef = collection(db, "messages");
+      const chatsRef = collection(db, "chats");
 
-    const uSnap = await getDoc(doc(db, "users", selectedUser.id));
-    const uData = uSnap.data();
+      const newMessageRef = doc(messagesRef);
+      await setDoc(newMessageRef, {
+        createAt: serverTimestamp(),
+        messages: [],
+      });
 
-    setChat({
-      messagesId: newMessageRef.id,
-      lastMessage: "",
-      rId: selectedUser.id,
-      updatedAt: Date.now(),
-      messageSeen: true,
-      userData: uData,
-    });
+      const otherUserChatRef = doc(chatsRef, selectedUser.id);
+      const myChatRef = doc(chatsRef, userData.id);
 
-    setShowSearch(false);
-    setChatVisible(true);
-  } catch (error) {
-    toast.error(error.message);
-    console.error("Chat creation error:", error);
-  }
-};
+      const [myDocSnap, otherDocSnap] = await Promise.all([
+        getDoc(myChatRef),
+        getDoc(otherUserChatRef),
+      ]);
 
+      if (!myDocSnap.exists()) await setDoc(myChatRef, { chatsData: [] });
+      if (!otherDocSnap.exists()) await setDoc(otherUserChatRef, { chatsData: [] });
 
+      const chatEntryForOther = {
+        messageId: newMessageRef.id,
+        lastMessage: "",
+        rId: userData.id,
+        updatedAt: Date.now(),
+        messageSeen: true,
+      };
+
+      const chatEntryForMe = {
+        messageId: newMessageRef.id,
+        lastMessage: "",
+        rId: selectedUser.id,
+        updatedAt: Date.now(),
+        messageSeen: true,
+      };
+
+      await updateDoc(otherUserChatRef, { chatsData: arrayUnion(chatEntryForOther) });
+      await updateDoc(myChatRef, { chatsData: arrayUnion(chatEntryForMe) });
+
+      const uSnap = await getDoc(doc(db, "users", selectedUser.id));
+      const uData = uSnap.data();
+
+      setChat({
+        messagesId: newMessageRef.id,
+        lastMessage: "",
+        rId: selectedUser.id,
+        updatedAt: Date.now(),
+        messageSeen: true,
+        userData: uData,
+      });
+
+      setShowSearch(false);
+      setChatVisible(true);
+    } catch (error) {
+      toast.error(error.message);
+      console.error("Chat creation error:", error);
+    }
+  };
 
   const setChat = async (item) => {
     try {
@@ -181,7 +191,7 @@ const addChat = async (selectedUser) => {
 
   useEffect(() => {
     const updateChatUserData = async () => {
-      if (chatUser) {
+      if (chatUser?.userData?.id) {
         const userRef = doc(db, "users", chatUser.userData.id);
         const userSnap = await getDoc(userRef);
         const userData = userSnap.data();
@@ -207,13 +217,10 @@ const addChat = async (selectedUser) => {
         </div>
         <div className="ls-search">
           <img src={assets.search_icon} alt="" />
-          <input
-            onChange={inputHandler}
-            type="text"
-            placeholder="Search here.."
-          />
+          <input onChange={inputHandler} type="text" placeholder="Search here.." />
         </div>
       </div>
+
       <div className="ls-list">
         {showSearch && searchResults.length > 0 ? (
           searchResults.map((usr, index) => (
@@ -227,23 +234,42 @@ const addChat = async (selectedUser) => {
             </div>
           ))
         ) : (
-          Array.isArray(chatData) &&
-          chatData.map((item, index) => (
-            <div
-              onClick={() => setChat(item)}
-              key={index}
-              className={`friends ${
-                item.messageSeen || item.messageId === messagesId ? "" : "border"
-              }`}
-              style={{ animationDelay: `${index * 0.05}s` }}
-            >
-              <img src={item.userData.avatar} alt="" />
-              <div>
-                <p>{item.userData.name}</p>
-                <span>{item.lastMessage}</span>
+          <>
+            {/* Existing Chat List */}
+            {Array.isArray(chatData) &&
+              chatData.map((item, index) => {
+                if (!item.userData) return null;
+                return (
+                  <div
+                    onClick={() => setChat(item)}
+                    key={index}
+                    className={`friends ${
+                      item.messageSeen || item.messageId === messagesId ? "" : "border"
+                    }`}
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    <img src={item.userData.avatar} alt="" />
+                    <div>
+                      <p>{item.userData.name}</p>
+                      <span>{item.lastMessage}</span>
+                    </div>
+                  </div>
+                );
+              })}
+
+            {/* Registered Users List */}
+            
+            {registeredUsers.map((usr, index) => (
+              <div
+                key={usr.id || index}
+                onClick={() => addChat(usr)}
+                className="friends add-user"
+              >
+                <img className="" src={usr.avatar} alt="" />
+                <p>{usr.name}</p>
               </div>
-            </div>
-          ))
+            ))}
+          </>
         )}
       </div>
     </div>
